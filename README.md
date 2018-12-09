@@ -1,2 +1,1 @@
-# mvvm-forecast
-:cloudy: :sunny:
+# Crazy posts user
