@@ -12,7 +12,7 @@ class ListContract {
         fun loadAllDataSuccess(model: DetailsViewModel)
     }
 
-    interface Presenter : BaseContract.Presenter<ListContract.Presenter>{
+    interface Presenter : BaseContract.Presenter<ListContract.View>{
         fun loadData()
         fun loadAllData()
         fun deleteItem(item : Post)
