@@ -1,4 +1,7 @@
 package com.projects.enzoftware.krazyposts
 
-class BaseApp {
+import android.app.Application
+
+class BaseApp: Application() {
+
 }
