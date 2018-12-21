@@ -7,6 +7,8 @@ import android.view.MenuItem
 import com.projects.enzoftware.krazyposts.R
 import com.projects.enzoftware.krazyposts.di.component.DaggerActivityComponent
 import com.projects.enzoftware.krazyposts.di.module.ActivityModule
+import com.projects.enzoftware.krazyposts.ui.about.AboutFragment
+import com.projects.enzoftware.krazyposts.ui.list.ListFragment
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -25,25 +27,36 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
 
     override fun onBackPressed() {
-        super.onBackPressed()
-    }
+        val fragmentManager = supportFragmentManager
+        val fragment = fragmentManager.findFragmentByTag(AboutFragment.TAG)
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return super.onCreateOptionsMenu(menu)
+        if (fragment == null){
+            super.onBackPressed()
+        }else{
+            supportFragmentManager.popBackStack()
+        }
     }
 
     // IMPLEMENTATION OF PRESENTER
 
     override fun showAboutFragment() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (supportFragmentManager.findFragmentByTag(AboutFragment.TAG) == null) {
+            supportFragmentManager.beginTransaction()
+                .addToBackStack(null)
+                .setCustomAnimations(AnimType.FADE.getAnimPair().first, AnimType.FADE.getAnimPair().second)
+                .replace(R.id.frame, AboutFragment().newInstance(), AboutFragment.TAG)
+                .commit()
+        } else {
+            // Maybe an animation like shake hello text
+        }
     }
 
     override fun showListFragment() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        supportFragmentManager.beginTransaction()
+            .disallowAddToBackStack()
+            .setCustomAnimations(AnimType.SLIDE.getAnimPair().first, AnimType.SLIDE.getAnimPair().second)
+            .replace(R.id.frame, ListFragment().newInstance(), ListFragment.TAG)
+            .commit()
     }
 
 
